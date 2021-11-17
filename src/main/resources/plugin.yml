@@ -1,0 +1,5 @@
+name: PartyManager
+version: ${project.version}
+main: me.serenia.partymanager.PartyManager
+authors: [ Ayouub ]
+description: Minecraft party manager plugin
