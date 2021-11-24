@@ -1,5 +1,16 @@
 name: PartyManager
 version: ${project.version}
 main: me.serenia.partymanager.PartyManager
+api-version: 1.16
 authors: [ Ayouub ]
 description: Minecraft party manager plugin
+commands:
+  atlas:
+    description: 'Allows you to open the party gui'
+    aliases: at
+  invite:
+    description: 'invite player to a party'
+    aliases: inv
+  party:
+    aliases: p
+    description: 'accept or deny a party request'

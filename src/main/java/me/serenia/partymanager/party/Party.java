@@ -4,9 +4,11 @@ package me.serenia.partymanager.party;
 
 import lombok.Data;
 import me.serenia.partymanager.Utils;
+import me.serenia.partymanager.player.Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.UUID;
 import static me.serenia.partymanager.PartyManager.*;
@@ -17,18 +19,23 @@ public class Party {
      boolean roundRobin;
      boolean ffa;
      boolean lastHit;
-    public Party(UUID partyLeader, LinkedList<UUID> members, boolean roundRobin, boolean ffa, boolean lastHit){
+    public Party(UUID partyLeader, UUID... mms){
         this.partyLeader = partyLeader;
+        LinkedList<UUID> members = new LinkedList<>();
+        members.add(partyLeader);
+        Collections.addAll(members, mms);
         this.members = members;
-        this.roundRobin = roundRobin;
-        this.ffa = ffa;
-        this.lastHit = lastHit;
+        Player p = Bukkit.getPlayer(partyLeader);
+        this.roundRobin = Manager.getValue(p, "roundRobin");
+        this.ffa = Manager.getValue(p, "ffa");
+        this.lastHit = Manager.getValue(p, "lastHit");
+        parties.add(this);
     }
-    int size(){
+    public int size(){
         return members.size();
     }
 
-    void kick(Player p){
+    public void kick(Player p){
         UUID id = p.getUniqueId();
         if (id == partyLeader){
 
@@ -36,7 +43,14 @@ public class Party {
         members.remove(p.getUniqueId());
 
     }
-    void cleanUp(){
+    public void add(Player p){
+        members.add(p.getUniqueId());
+        broadCastMessage(Utils.getString("join-message-bc", p.getName()));
+    }
+    public boolean isLeader(Player p){
+        return p.getUniqueId() == partyLeader;
+    }
+    public void cleanUp(){
         members.removeIf(uuid -> (Bukkit.getPlayer(uuid) == null));
         if (size() > 2){
            if (!parties.contains(this)) return;
@@ -45,12 +59,12 @@ public class Party {
             partyLeader = members.get(0);
         }
     }
-    void broadCastMessage(String s){
+    public void broadCastMessage(String s){
         for (Player p : getPlayers()){
             p.sendMessage(Utils.chat(s));
         }
     }
-    LinkedList<Player> getPlayers(){
+    public LinkedList<Player> getPlayers(){
         LinkedList<Player> players = new LinkedList<>();
         for (UUID id : members){
             Player p = Bukkit.getPlayer(id);
@@ -58,7 +72,7 @@ public class Party {
         }
         return players;
     }
-    boolean hasPlayer(Player p){
+    public boolean hasPlayer(Player p){
         return members.contains(p.getUniqueId());
     }
 }

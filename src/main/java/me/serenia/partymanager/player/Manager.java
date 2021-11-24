@@ -26,11 +26,16 @@ public class Manager implements Listener {
         config.set("players." + p.getUniqueId() + ".roundRobin" , "false");
         config.set("players." + p.getUniqueId() + ".lastHit" , "false");
         config.set("players." + p.getUniqueId() + ".ffa" , "false");
+        config.set("players." + p.getUniqueId() + ".partyGlow" , "false");
         PlayerData.save();
     }
     void setValue(Player p, String path, boolean value){
         FileConfiguration config = PlayerData.get();
         config.set("players." + p.getUniqueId() + "." + path , value);
         PlayerData.save();
+    }
+    public static boolean getValue(Player p, String path){
+        FileConfiguration config = PlayerData.get();
+        return Boolean.parseBoolean(String.valueOf(config.get(p.getUniqueId() +"."+ path)));
     }
 }

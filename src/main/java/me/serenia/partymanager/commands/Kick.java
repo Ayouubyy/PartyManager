@@ -1,4 +1,6 @@
 package me.serenia.partymanager.commands;
 
-public class Kick {
+import co.aikar.commands.BaseCommand;
+
+public class Kick extends BaseCommand {
 }

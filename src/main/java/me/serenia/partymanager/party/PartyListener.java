@@ -24,7 +24,7 @@ public class PartyListener implements Listener {
         if (party == null) return;
         party.kick(p);
     }
-    static Party getParty(Player p){
+    public static Party getParty(Player p){
         for (Party party : parties){
             if (party.hasPlayer(p)) return party;
         }

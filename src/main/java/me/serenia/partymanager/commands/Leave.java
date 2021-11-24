@@ -1,4 +1,6 @@
 package me.serenia.partymanager.commands;
 
-public class Leave {
+import co.aikar.commands.BaseCommand;
+
+public class Leave extends BaseCommand {
 }

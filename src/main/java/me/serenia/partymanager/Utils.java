@@ -1,6 +1,7 @@
 package me.serenia.partymanager;
 
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,15 +20,18 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
-    public static String getString(String s, PartyManager plugin){ return chat(plugin.getConfig().getString(s));}
+    public static String getString(String s){ return chat(PartyManager.instance().getConfig().getString(s));}
+    public static String getString(String s, String value){ return chat((PartyManager.instance().getConfig().getString(s).replace("<value>", value)));}
     public static String chat (String s){
         return ChatColor.translateAlternateColorCodes('&', s);
     }
@@ -106,11 +110,11 @@ public class Utils {
         }
     }
     public static void addLore(ItemStack item, String s){
-         List<String> list = new ArrayList<>();
-         if (item.getItemMeta().hasLore()) list.addAll(item.getItemMeta().getLore());
-            list.add(Utils.chat(s));
+         List<Component> list = new ArrayList<>();
+         if (item.getItemMeta().hasLore()) list.addAll(item.getItemMeta().lore());
+            list.add(net.kyori.adventure.text.Component.text(Utils.chat(s)));
                ItemMeta meta = item.getItemMeta();
-           meta.setLore(list);
+           meta.lore(list);
            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
            item.setItemMeta(meta);
     }
