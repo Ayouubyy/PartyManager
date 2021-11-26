@@ -7,8 +7,13 @@
 not-in-party: '&e&lPARTY &cyou are not in a party!'
 not-party-leader: '&e&lPARTY &cyou are not the party leader!'
 invalid-error: '&e&lPARTY &cparty invalid'
+player-not-in-party: '&e&lPARTY &cThat player is not in your party!'
+
+
 # Atlas commandz
 atlas-wrong-usage: '&e&lPARTY &cwrong usage! please use /atlas party'
+
+
 # Invite command
 invite-send: '&e&lPARTY &ayou have invited <value> to your party'
 invite-error: '&e&lPARTY &c<value> has a request pending already'
@@ -22,14 +27,23 @@ invite-wrong-usage: '&e&lPARTY &cwrong usage! please use /invite <ign>'
 party-wrong-usage: '&e&lPARTY &cwrong usage! please use /party accept/deny'
 deny-message: '&e&lPARTY &cyou denied the party request'
 invalid-request: '&e&lPARTY &cyou do not have a pending request'
+
+
 # Kick command
 kick-player-kicked: '&e&lPARTY &cyou have kicked <value> from your party'
 kick-wrong-usage: '&e&lPARTY &cwrong usage! please use /kick <ign>'
+
+
 # Leave command
 leave-player-message: '&e&lPARTY &cyou have left your party'
 leave-wrong-usage: '&e&lPARTY &cwrong usage! please use /leave'
 leave-message: '&e&lPARTY &7<value> has left the party!'
-# Promote message
-promote-give: '&e&lPARTY &ayou have promoted <value> to party leader'
-promote-recieve: '&e&lPARTY &ayou have been promoted to party leader'
+
+
+# Promote command
+promote-message: '&e&lPARTY &a<value> is now the party leader'
 promote-wrong-usage: '&e&lPARTY &cwrong usage! please use /promote <ign>'
+
+
+# Toggling messages
+toggle-message: '&e&lPARTY &6<path> &7is now <value>'

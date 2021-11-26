@@ -3,6 +3,7 @@ package me.serenia.partymanager;
 import co.aikar.commands.PaperCommandManager;
 import me.serenia.partymanager.commands.*;
 import me.serenia.partymanager.commands.invitesystem.Invite;
+import me.serenia.partymanager.commands.invitesystem.PartyCommand;
 import me.serenia.partymanager.gui.GuiListener;
 import me.serenia.partymanager.party.Party;
 import me.serenia.partymanager.party.PartyListener;
@@ -43,7 +44,7 @@ public final class PartyManager extends JavaPlugin {
         manager.registerCommand(new Atlas());
         manager.registerCommand(new Leave());
         manager.registerCommand(new Promote());
-        manager.registerCommand(new me.serenia.partymanager.commands.invitesystem.Party());
+        manager.registerCommand(new PartyCommand());
     }
     void registerListeners(){
         new Manager(this);

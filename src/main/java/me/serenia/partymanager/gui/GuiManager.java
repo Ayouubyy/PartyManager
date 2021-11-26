@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 
 
 import java.awt.*;
@@ -39,14 +40,14 @@ public class GuiManager {
         } else {
             f(inv, lootSharing, 11, 12, 20, 21);
             f(inv, partyGlowing, 13, 14, 22, 23);
-            f(inv, partyGlowing, 15, 16, 24, 25);
+            f(inv, partyLeave, 15, 16, 24, 25);
             int i = 39;
             for(Player ps : party.getPlayers()){
                 inv.setItem(i, getHead(ps));
                 i++;
             }
         }
-        p.setMetadata(partyMD, new FixedMetadataValue(PartyManager.instance(), false));
+        new BukkitRunnable(){@Override public void run() { p.setMetadata(partyMD, new FixedMetadataValue(PartyManager.instance(), false));}}.runTaskLater(PartyManager.instance(), 3);
         p.openInventory(inv);
     }
     public static void createLootSharingGui(Player p){
@@ -55,19 +56,19 @@ public class GuiManager {
         ItemStack roundRobin = createIStack(Material.BLAZE_ROD, "&6Round Robin", "&e&lCLICK &fto toggle");
         ItemStack ffa = createIStack(Material.BLAZE_ROD, "&bFree for all", "&e&lCLICK &fto toggle");
         ItemStack lastHit = createIStack(Material.BLAZE_ROD, "&6Last hit", "&e&lCLICK &fto toggle");
-        f(inv, roundRobin, 20, 21, 29, 30);
-        f(inv, ffa, 22, 23, 31, 32);
-        f(inv, lastHit, 24, 25, 33, 34);
         if (party == null){
-           addLore(roundRobin,getStr(Manager.getValue(p, "roundRobin")));
-           addLore(ffa,getStr(Manager.getValue(p, "ffa")));
-           addLore(lastHit,getStr(Manager.getValue(p, "lastHit")));
+            addLore(roundRobin,getStr(Manager.getValue(p, "roundRobin")));
+            addLore(ffa,getStr(Manager.getValue(p, "ffa")));
+            addLore(lastHit,getStr(Manager.getValue(p, "lastHit")));
         } else {
             addLore(roundRobin,getStr(party.isRoundRobin()));
             addLore(ffa,getStr(party.isFfa()));
             addLore(lastHit,getStr(party.isLastHit()));
         }
-        p.setMetadata(lootSharingMD, new FixedMetadataValue(PartyManager.instance(), false));
+        f(inv, roundRobin, 20, 21, 29, 30);
+        f(inv, ffa, 22, 23, 31, 32);
+        f(inv, lastHit, 24, 25, 33, 34);
+        new BukkitRunnable(){@Override public void run() { p.setMetadata(lootSharingMD, new FixedMetadataValue(PartyManager.instance(), false));}}.runTaskLater(PartyManager.instance(), 3);
         p.openInventory(inv);
     }
     static void f(Inventory v, ItemStack t, int... i){

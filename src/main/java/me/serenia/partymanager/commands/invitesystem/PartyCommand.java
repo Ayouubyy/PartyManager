@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import static me.serenia.partymanager.commands.invitesystem.Invite.invites;
 
 @CommandAlias("party|p")
-public class Party extends BaseCommand {
+public class PartyCommand extends BaseCommand {
     @Description("invites a player")
     @CommandCompletion("accept|deny")
     @Default

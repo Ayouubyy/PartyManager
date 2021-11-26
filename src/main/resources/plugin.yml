@@ -14,3 +14,9 @@ commands:
   party:
     aliases: p
     description: 'accept or deny a party request'
+  kick:
+    description: 'kick a player from a party'
+  leave:
+    description: 'leave a party'
+  promote:
+    description: 'promote some in the party'

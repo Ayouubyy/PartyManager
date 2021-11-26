@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.UUID;
 import static me.serenia.partymanager.PartyManager.*;
 @Data
@@ -36,12 +37,9 @@ public class Party {
     }
 
     public void kick(Player p){
-        UUID id = p.getUniqueId();
-        if (id == partyLeader){
-
-        }
         members.remove(p.getUniqueId());
-
+        cleanUp();
+        if (p.hasMetadata("partyMD")) p.closeInventory();
     }
     public void add(Player p){
         members.add(p.getUniqueId());
@@ -52,7 +50,7 @@ public class Party {
     }
     public void cleanUp(){
         members.removeIf(uuid -> (Bukkit.getPlayer(uuid) == null));
-        if (size() > 2){
+        if (size() < 2){
            if (!parties.contains(this)) return;
            parties.remove(this);
         } else {
@@ -64,6 +62,12 @@ public class Party {
             p.sendMessage(Utils.chat(s));
         }
     }
+
+    public void setPartyLeader(UUID partyLeader) {
+        this.partyLeader = partyLeader;
+        Collections.swap(members, 0, members.indexOf(partyLeader));
+    }
+
     public LinkedList<Player> getPlayers(){
         LinkedList<Player> players = new LinkedList<>();
         for (UUID id : members){
@@ -75,4 +79,29 @@ public class Party {
     public boolean hasPlayer(Player p){
         return members.contains(p.getUniqueId());
     }
+
+    public void toggleLootSharingOption(String path, String displayname) {
+        boolean value = false;
+        Player p = Bukkit.getPlayer(partyLeader);
+        if (p == null){ cleanUp(); return;}
+        if (Objects.equals(path, "ffa")) {
+            this.ffa = !ffa;
+            value= ffa;
+            Manager.setValue(p, "ffa", value);
+        }
+        if (Objects.equals(path, "lastHit")) {
+            this.lastHit = !lastHit;
+            value = lastHit;
+            Manager.setValue(p, "lastHit", value);
+        }
+        if (Objects.equals(path, "roundRobin")) {
+            this.roundRobin = !roundRobin;
+            value = roundRobin;
+            Manager.setValue(p, "roundRobin", value);
+        }
+        String v = "&coff";
+        if (value) v = "&aon";
+        broadCastMessage(Utils.getToggleString(v,displayname));
+    }
+
 }

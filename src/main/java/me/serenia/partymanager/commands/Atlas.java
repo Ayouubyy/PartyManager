@@ -12,7 +12,7 @@ public class Atlas extends BaseCommand {
     @Default
     @CommandCompletion("party")
     @Description("opens party gui")
-    public static void onParty(Player p, String[] args){
+    public static void onAtlas(Player p, String[] args){
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("party")) {
                 createPartyGui(p);

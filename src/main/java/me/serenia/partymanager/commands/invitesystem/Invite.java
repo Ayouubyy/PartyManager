@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static me.serenia.partymanager.Utils.*;
-import static me.serenia.partymanager.commands.invitesystem.Party.*;
+import static me.serenia.partymanager.commands.invitesystem.PartyCommand.*;
 
 @CommandAlias("invite")
 public class Invite extends BaseCommand {
@@ -43,8 +43,8 @@ public class Invite extends BaseCommand {
                         return;
                     }
                 }
-                TextComponent accept = create(getString("accept"), "/party accept" + p.getUniqueId(), "&aClick to accept!");
-                TextComponent deny = create(getString("deny"), "/party deny" + p.getUniqueId(), "&cClick to deny!");
+                TextComponent accept = create(getString("accept"), "party accept" + p.getUniqueId(), "&aClick to accept!");
+                TextComponent deny = create(getString("deny"), "party deny" + p.getUniqueId(), "&cClick to deny!");
                 p.sendMessage(getString("invite-send", ps.getName()));
                 ps.sendMessage(getString("invite-receive", p.getName()));
                 ps.sendMessage(accept.append(deny));
@@ -55,10 +55,9 @@ public class Invite extends BaseCommand {
         p.sendMessage(getString("invite-wrong-usage"));
     }
     static net.kyori.adventure.text.TextComponent create(String s, String cmd, String text){
-        TextComponent msg = Component.text(Utils.chat(s))
+        return Component.text(Utils.chat(s))
                 .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, cmd))
                 .hoverEvent(HoverEvent.showText(Component.text(chat(text))));
-        return msg;
     }
 
 }
