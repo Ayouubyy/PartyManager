@@ -95,7 +95,7 @@ public class GuiManager {
         return s;
     }
     static ItemStack getHead(Player p){
-        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+        ItemStack item = createIStack(Material.PLAYER_HEAD, "&a&l" + p.getName(), "&e&lCLICK &fto show options");
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setPlayerProfile(p.getPlayerProfile());
         item.setItemMeta(meta);

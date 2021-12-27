@@ -6,12 +6,21 @@ import me.serenia.partymanager.party.Party;
 import me.serenia.partymanager.party.PartyListener;
 import me.serenia.partymanager.player.Manager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 import static me.serenia.partymanager.gui.GuiManager.*;
 import static me.serenia.partymanager.Utils.*;
@@ -38,6 +47,8 @@ public class GuiListener implements Listener {
         Player p = (Player) e.getWhoClicked();
         int i = e.getSlot();
         Party party = PartyListener.getParty(p);
+        Inventory inv = e.getClickedInventory();
+        if (inv == p.getInventory()) return;
         if (p.hasMetadata(partyMD)){
             e.setCancelled(true);
             if (party != null){
@@ -45,10 +56,21 @@ public class GuiListener implements Listener {
                     createLootSharingGui(p);
                 } else if (s(i, 13,14,22,23)){
                     toggle(p, "partyGlow", "party glowing");
+                    party.glowMembers();
                     createPartyGui(p);
                 }  else if (s(i, 15,16,24,25)){
                     p.closeInventory();
                     p.performCommand("leave");
+                }  else if (s(i, 40, 41, 42, 43)){
+                    int j = i - 39;
+                    if(party.size() >= j + 1){
+                        Player ps = Bukkit.getPlayer(party.getMembers().get(j));
+                        if (p.getUniqueId() == party.getPartyLeader()) showOptions(ps, p, inv);
+                    }
+                } else if (s(i, 30, 48)){
+                    ItemStack item = e.getCurrentItem();
+                    if (item == null) return;
+                    p.performCommand(getCommand(item));
                 }
             } else {
                 if (s(i, 21,22,30,31)){
@@ -103,5 +125,37 @@ public class GuiListener implements Listener {
         String v = "&coff";
         if (b) v = "&aon";
         p.sendMessage(Utils.getToggleString(v,displayname));
+    }
+    void showOptions(Player p, Player invholder, Inventory inv){
+        ItemStack promote = createIStack(Material.GREEN_TERRACOTTA, "&aPromote " + p.getName(), "&e&lCLICK &7to promote the player");
+        ItemStack kick = createIStack(Material.RED_TERRACOTTA, "&cKick " + p.getName(), "&e&lCLICK &7to kick the player");
+        String cmd = "partymanager:promote " + p.getName();
+        putCommand(promote, cmd);
+        putCommand(kick, "partymanager:kick " + p.getName());
+        inv.setItem(30, promote);
+        inv.setItem(48, kick);
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                ItemStack item1 = inv.getItem(30);
+                if (item1 == null) return;
+                if (getCommand(item1).equals(cmd)){
+                    ItemStack air = new ItemStack(Material.AIR);
+                    inv.setItem(30, air);
+                    inv.setItem(48, air.clone());
+                }
+            }
+        }.runTaskLater(plugin, 100);
+    }
+    void putCommand(ItemStack item, String cmd){
+        ItemMeta meta = item.getItemMeta();
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "command"), PersistentDataType.STRING, cmd);
+        item.setItemMeta(meta);
+    }
+    String getCommand(ItemStack item){
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return "null";
+        if (!meta.getPersistentDataContainer().has(new NamespacedKey(plugin, "command"), PersistentDataType.STRING)) return "null";
+        return meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "command"), PersistentDataType.STRING);
     }
 }

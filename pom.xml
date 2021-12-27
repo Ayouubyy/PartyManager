@@ -40,7 +40,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputDirectory>C:\Users\Alpha\Desktop\Ayoub\Ayoub's servers\Paper 1.16.5\plugins</outputDirectory>
+                            <outputDirectory>C:\Users\Alpha\Desktop\Ayoub\Ayoub's servers\Paper 1.17.1\plugins</outputDirectory>
                             <finalName>PartyManager</finalName>
                         </configuration>
                     </execution>
@@ -85,6 +85,14 @@
             <id>projectlombok.org</id>
             <url>https://projectlombok.org/edge-releases</url>
         </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -105,6 +113,18 @@
             <artifactId>lombok</artifactId>
             <version>edge-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.InventivetalentDev</groupId>
+            <artifactId>GlowAPI</artifactId>
+            <version>1.5.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

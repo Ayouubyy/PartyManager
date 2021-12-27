@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 public final class PartyManager extends JavaPlugin {
     private static PartyManager instance;
     @Override
@@ -45,6 +47,7 @@ public final class PartyManager extends JavaPlugin {
         manager.registerCommand(new Leave());
         manager.registerCommand(new Promote());
         manager.registerCommand(new PartyCommand());
+        manager.registerCommand(new Chat());
     }
     void registerListeners(){
         new Manager(this);

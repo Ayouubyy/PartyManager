@@ -8,7 +8,8 @@ not-in-party: '&e&lPARTY &cyou are not in a party!'
 not-party-leader: '&e&lPARTY &cyou are not the party leader!'
 invalid-error: '&e&lPARTY &cparty invalid'
 player-not-in-party: '&e&lPARTY &cThat player is not in your party!'
-
+player-is-you: '&e&lPARTY &cThat command cannot be executed on yourself!'
+player-invalid: '&e&lPARTY &cThat player is offline or doesn`t exist'
 
 # Atlas commandz
 atlas-wrong-usage: '&e&lPARTY &cwrong usage! please use /atlas party'
@@ -17,6 +18,7 @@ atlas-wrong-usage: '&e&lPARTY &cwrong usage! please use /atlas party'
 # Invite command
 invite-send: '&e&lPARTY &ayou have invited <value> to your party'
 invite-error: '&e&lPARTY &c<value> has a request pending already'
+invite-already-in-party: '&e&lPARTY &c<value> is already in a party'
 invite-party-full: '&e&lPARTY &cthe party is full'
 invite-receive: '&e&lPARTY &ayou have been invited to <value>`s party'
 accept: ' &a&l[ACCEPT] '
@@ -30,7 +32,8 @@ invalid-request: '&e&lPARTY &cyou do not have a pending request'
 
 
 # Kick command
-kick-player-kicked: '&e&lPARTY &cyou have kicked <value> from your party'
+kick-player-kick: '&e&lPARTY &cyou have been kicked by <value> from your party'
+kick-player-kicked: '&e&lPARTY &c<value1> has kicked <value> from the party'
 kick-wrong-usage: '&e&lPARTY &cwrong usage! please use /kick <ign>'
 
 
@@ -38,11 +41,15 @@ kick-wrong-usage: '&e&lPARTY &cwrong usage! please use /kick <ign>'
 leave-player-message: '&e&lPARTY &cyou have left your party'
 leave-wrong-usage: '&e&lPARTY &cwrong usage! please use /leave'
 leave-message: '&e&lPARTY &7<value> has left the party!'
-
+leave-disbanded: '&e&lPARTY &cThe party has been disbanded.'
 
 # Promote command
 promote-message: '&e&lPARTY &a<value> is now the party leader'
 promote-wrong-usage: '&e&lPARTY &cwrong usage! please use /promote <ign>'
+
+# Party chat command
+chat-format: '&e&lPARTY CHAT &c<value>&7: &f'
+toggling-message: '&e&lPARTY &6party chat &7is now <value>&7. This feature will only work if you are in a party!'
 
 
 # Toggling messages

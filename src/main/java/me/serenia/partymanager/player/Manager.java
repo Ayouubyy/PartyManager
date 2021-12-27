@@ -27,6 +27,7 @@ public class Manager implements Listener {
         setValue(p, "lastHit", false);
         setValue(p, "ffa", false);
         setValue(p, "partyGlow", false);
+        setValue(p, "partyChat", false);
         PlayerData.save();
     }
     public static void setValue(Player p, String path, boolean value){

@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import static me.serenia.partymanager.Utils.getString;
+import static me.serenia.partymanager.commands.Kick.checkArguments;
 
 
 @CommandAlias("promote")
@@ -24,17 +25,10 @@ public class Promote extends BaseCommand {
             p.sendMessage(getString("promote-wrong-usage"));
             return;
         }
-        if (party == null){
-            p.sendMessage(getString("not-in-party"));
-            return;
-        }
-        if (party.getPartyLeader() != p.getUniqueId()){
-            p.sendMessage(getString("not-party-leader"));
-            return;
-        }
         Player ps = Bukkit.getPlayer(args[0]);
-        if (ps == null || (!party.hasPlayer(ps))){
-            p.sendMessage(getString("kick-player-not-in-party"));
+        if (!checkArguments(p, ps, party)) return;
+        if (!party.hasPlayer(ps)){
+            p.sendMessage(getString("player-not-in-party"));
             return;
         }
         party.setPartyLeader(ps.getUniqueId());

@@ -4,6 +4,7 @@ main: me.serenia.partymanager.PartyManager
 api-version: 1.16
 authors: [ Ayouub ]
 description: Minecraft party manager plugin
+depend: [ GlowAPI ]
 commands:
   atlas:
     description: 'Allows you to open the party gui'
@@ -20,3 +21,5 @@ commands:
     description: 'leave a party'
   promote:
     description: 'promote some in the party'
+  partychat:
+    description: 'toggle party chat'

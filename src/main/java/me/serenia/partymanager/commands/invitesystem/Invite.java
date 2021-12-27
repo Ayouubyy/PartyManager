@@ -32,19 +32,29 @@ public class Invite extends BaseCommand {
                 Party party = PartyListener.getParty(p);
                 if (getPartyInvite(ps) != null){
                     p.sendMessage(getString("invite-error", ps.getName()));
+                    return;
                 }
-                if (party != null) {
-                    if (!party.isLeader(p)) {
-                        p.sendMessage(getString("not-party-leader"));
-                        return;
-                    }
+                if (PartyListener.getParty(ps) != null){
+                    p.sendMessage(getString("invite-already-in-party", ps.getName()));
+                    return;
+                }
+                if (ps == p){
+                    p.sendMessage(getString("player-is-you"));
+                    return;
+                }
+                if (party != null){
                     if (party.size() >= 5){
                         p.sendMessage(getString("invite-party-full"));
                         return;
                     }
+                    if (party.getPartyLeader() != p.getUniqueId()){
+                        p.sendMessage(getString("not-party-leader"));
+                        return ;
+                    }
                 }
-                TextComponent accept = create(getString("accept"), "party accept" + p.getUniqueId(), "&aClick to accept!");
-                TextComponent deny = create(getString("deny"), "party deny" + p.getUniqueId(), "&cClick to deny!");
+
+                TextComponent accept = create(getString("accept"), "/party accept", "&aClick to accept!");
+                TextComponent deny = create(getString("deny"), "/party deny", "&cClick to deny!");
                 p.sendMessage(getString("invite-send", ps.getName()));
                 ps.sendMessage(getString("invite-receive", p.getName()));
                 ps.sendMessage(accept.append(deny));

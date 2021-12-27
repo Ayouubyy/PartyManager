@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Utils {
     public static String getString(String s){ return chat(PartyManager.instance().getConfig().getString(s));}
+    public static String getString(String s, String value, String value1){ return chat(PartyManager.instance().getConfig().getString(s).replace("<value>", value).replace("<value1>", value1));}
     public static String getString(String s, String value){ return chat((PartyManager.instance().getConfig().getString(s).replace("<value>", value)));}
     public static String getToggleString(String value, String value1){ return chat((PartyManager.instance().getConfig().getString("toggle-message").replace("<value>", value).replace("<path>", value1)));}
     public static String chat (String s){

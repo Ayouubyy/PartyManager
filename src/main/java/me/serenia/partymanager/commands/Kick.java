@@ -19,25 +19,37 @@ public class Kick extends BaseCommand {
     @Description("kick a player from party")
     public static void onKick(Player p, String[] args){
         Party party = PartyListener.getParty(p);
-        if (args.length != 1){
+        if (args.length != 1) {
             p.sendMessage(getString("kick-wrong-usage"));
             return;
         }
-        if (party == null){
-            p.sendMessage(getString("not-in-party"));
-            return;
-        }
-        if (party.getPartyLeader() != p.getUniqueId()){
-            p.sendMessage(getString("not-party-leader"));
-            return;
-        }
         Player ps = Bukkit.getPlayer(args[0]);
-        if (ps == null || (!party.hasPlayer(ps))){
+        if (!checkArguments(p, ps, party)) return;
+        if (!party.hasPlayer(ps)){
             p.sendMessage(getString("player-not-in-party"));
             return;
         }
+        ps.sendMessage(getString("kick-player-kick", ps.getName()));
         party.kick(ps);
-        party.broadCastMessage(getString("leave-message", ps.getName()));
-        ps.sendMessage(getString("leave-player-message"));
+        party.broadCastMessage(getString("kick-player-kicked", ps.getName(), p.getName()));
+    }
+    public static boolean checkArguments(Player p, Player ps, Party party){
+        if (party == null){
+            p.sendMessage(getString("not-in-party"));
+            return false;
+        }
+        if (party.getPartyLeader() != p.getUniqueId()){
+            p.sendMessage(getString("not-party-leader"));
+            return false;
+        }
+        if (ps == null){
+            p.sendMessage(getString("player-invalid"));
+            return false;
+        }
+        if (ps == p){
+            p.sendMessage(getString("player-is-you"));
+            return false;
+        }
+        return true;
     }
 }
