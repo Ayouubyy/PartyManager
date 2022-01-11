@@ -12,32 +12,35 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-
 import static me.serenia.partymanager.PartyManager.parties;
 import static me.serenia.partymanager.Utils.getString;
 
 public class PartyListener implements Listener {
     private PartyManager plugin;
-    public PartyListener(PartyManager plugin){
+
+    public PartyListener(PartyManager plugin) {
         this.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
+
+    public static Party getParty(Player p) {
+        for (Party party : parties) {
+            if (party.hasPlayer(p)) return party;
+        }
+        return null;
+    }
+
     @EventHandler
-    public void onLeave(PlayerQuitEvent e){
+    public void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         Party party = getParty(p);
         if (party == null) return;
         party.kick(p);
         party.broadCastMessage(getString("leave-message", p.getName()));
     }
-    public static Party getParty(Player p){
-        for (Party party : parties){
-            if (party.hasPlayer(p)) return party;
-        }
-        return null;
-    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onChat(AsyncChatEvent e){
+    public void onChat(AsyncChatEvent e) {
         Player p = e.getPlayer();
         Party party = getParty(p);
         if (party == null) return;
